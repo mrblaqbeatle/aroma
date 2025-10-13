@@ -1,0 +1,91 @@
+.intro {
+    text-align: center;
+}
+
+.intro h1 {
+    font-size: 2.5rem;
+
+}
+
+h2 {
+    text-align: center;
+    padding-top: 30px;
+}
+
+hr {
+    background-color: greenyellow;
+    color: greenyellow;
+    padding: 3px 8px;
+    border: none;
+    border-radius: 15px;
+}
+
+/*.menu {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem auto;
+    padding-bottom: 30px;
+    max-width: 1200px;
+
+}*/
+
+.menu {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem auto;
+    padding-bottom: 30px;
+    justify-content: center;
+
+}
+
+/*.dishes {
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: bisque;
+    transition: transform 0.3s;
+    border-bottom: 2px solid #e0d0b0;
+}*/
+
+.dishes {
+    flex: 1 1 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #e2fac9;
+    transition: transform 0.3s;
+    max-width: 300px;
+    border-bottom: 2px solid #e0d0b0;
+}
+
+.dishes img {
+    height: 250px;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}
+
+.dishes h4 {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.dishes p {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.dishes span {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+    display: block;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+
+}
