@@ -19,7 +19,9 @@
 
             </div>
 
-
+            <div class="hamburger">
+                <img src="asets/imgs/burger.png" alt="Menu">
+            </div>
 
             <ul class="nav-links">
                 <li><a href="index.html">HOME</a></li>
@@ -28,6 +30,14 @@
             </ul>
         </nav>
     </header>
+
+    <div class="off-canvas-menu">
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="menu.html">MENU</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+    </div>
 
     <main>
 
@@ -155,6 +165,34 @@
         <p>&copy; 2025 Sweet Aroma Restaurant. All rights reserved.</p>
     </footer>
 
-</body>
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const offCanvasMenu = document.querySelector('.off-canvas-menu');
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            document.body.appendChild(overlay);
+
+            hamburger.addEventListener('click', function() {
+                offCanvasMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                offCanvasMenu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Close menu when clicking on a link
+            const navLinks = document.querySelectorAll('.off-canvas-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    offCanvasMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            });
+        });
+    </script>
 
 </html>

@@ -7,6 +7,7 @@
 body {
     margin: 5px;
     padding-top: 200px;
+    overflow-x: hidden;
 }
 
 
@@ -21,6 +22,7 @@ body {
     left: 0;
     background-color: rgb(124, 197, 7);
     border-radius: 5px;
+    z-index: 1000;
 }
 
 .logo {
@@ -45,6 +47,73 @@ body {
     transition: 0.2s;
 }
 
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger img {
+    width: 30px;
+    height: 30px;
+}
+
+.off-canvas-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.3s ease;
+    z-index: 999;
+}
+
+.off-canvas-menu.active {
+    right: 0;
+}
+
+.off-canvas-menu ul {
+    list-style: none;
+    text-align: center;
+}
+
+.off-canvas-menu li {
+    margin: 20px 0;
+}
+
+.off-canvas-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.off-canvas-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 998;
+}
+
+.overlay.active {
+    display: block;
+}
+
 hr {
     background-color: greenyellow;
     color: greenyellow;
@@ -63,5 +132,79 @@ footer {
 .logo img {
     width: 50px;
     height: 50px;
+}
 
+/* Responsive styles */
+@media (max-width: 1024px) {
+    body {
+        padding-top: 180px;
+    }
+    
+    .navbar {
+        padding: 20px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 160px;
+    }
+    
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .intro h1 {
+        font-size: 2rem;
+    }
+    
+    .intro a {
+        padding: 20px 30px;
+        font-size: medium;
+    }
+    
+    .intro a:hover {
+        padding: 25px 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 140px;
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+    }
+    
+    .intro h1 {
+        font-size: 1.5rem;
+    }
+    
+    .intro p {
+        font-size: 0.9rem;
+    }
+    
+    .intro a {
+        padding: 15px 25px;
+        font-size: small;
+    }
+    
+    .intro a:hover {
+        padding: 20px 30px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
 }

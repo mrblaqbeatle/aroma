@@ -31,12 +31,104 @@ hr {
 
 .menu {
     display: flex;
-    gap: 2rem;
     flex-wrap: wrap;
+    gap: 1.5rem;
     margin: 2rem auto;
     padding-bottom: 30px;
     justify-content: center;
+}
 
+.dishes {
+    flex: 1 1 220px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #e2fac9;
+    transition: transform 0.3s;
+    max-width: 280px;
+    min-width: 180px;
+    border-bottom: 2px solid #e0d0b0;
+}
+
+.dishes img {
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Responsive adjustments for menu cards */
+@media (max-width: 1024px) {
+    .menu {
+        gap: 1.2rem;
+    }
+    
+    .dishes {
+        flex: 1 1 200px;
+        max-width: 260px;
+    }
+    
+    .dishes img {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu {
+        gap: 1rem;
+    }
+    
+    .dishes {
+        flex: 1 1 180px;
+        max-width: 240px;
+    }
+    
+    .dishes img {
+        height: 160px;
+    }
+    
+    .dishes h4 {
+        font-size: 1.1rem;
+    }
+    
+    .dishes p {
+        font-size: 0.9rem;
+    }
+    
+    .dishes span {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        gap: 0.5rem;
+    }
+    
+    .dishes {
+        flex: 1 1 160px;
+        max-width: 220px;
+    }
+    
+    .dishes img {
+        height: 140px;
+    }
+    
+    .dishes h4 {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .dishes p {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+    }
+    
+    .dishes span {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
 }
 
 /*.dishes {

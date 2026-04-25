@@ -25,11 +25,103 @@
 
 .ontoday {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
     margin: 2rem auto;
     padding-bottom: 30px;
     justify-content: center;
+}
 
+.todaysdishes {
+    flex: 1 1 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #e2fac9;
+    transition: transform 0.3s;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.todaysdishes img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.todaysdishes h4 {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.todaysdishes p {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.todaysdishes span {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+    display: block;
+}
+
+/* Responsive adjustments for ontoday */
+@media (max-width: 768px) {
+    .ontoday {
+        gap: 1rem;
+    }
+    
+    .todaysdishes {
+        flex: 1 1 200px;
+        max-width: 250px;
+    }
+    
+    .todaysdishes img {
+        height: 200px;
+    }
+    
+    .todaysdishes h4 {
+        font-size: 1.1rem;
+    }
+    
+    .todaysdishes p {
+        font-size: 0.9rem;
+    }
+    
+    .todaysdishes span {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ontoday {
+        gap: 0.5rem;
+    }
+    
+    .todaysdishes {
+        flex: 1 1 180px;
+        max-width: 220px;
+    }
+    
+    .todaysdishes img {
+        height: 180px;
+    }
+    
+    .todaysdishes h4 {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .todaysdishes p {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+    }
+    
+    .todaysdishes span {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
 }
 
 .todaysdishes {
