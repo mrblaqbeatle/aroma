@@ -42,35 +42,18 @@
 
         <h2 style="text-align: center; margin-top: 100px; margin-bottom: 50px;">Special Dishes Today</h2><br>
 
-        <section class="ontoday">
-            <div class="todaysdishes">
-                <img src="asets/imgs/chicken.png">
-                <h4>Grilled Chicken</h4>
-                <p>Smokey grilled chicken</p>
-                <span>30,000 UGX</span>
-            </div>
-
-            <div class="todaysdishes">
-                <img src="asets/imgs/burger.png">
-                <h4>Cheese Beef Burger</h4>
-                <p>Try it out</p>
-                <span>12,000 UGX</span>
-            </div>
-
-            <div class="todaysdishes">
-                <img src="asets/imgs/cho-cake.png">
-                <h4>Chocolate Cake</h4>
-                <p>Decadent chocolate dessert</p>
-                <span>28,000 UGX</span>
-            </div>
-        </section>
+        <!-- Dynamic featured dishes — injected by index-dynamic.js -->
+        <section class="ontoday"></section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Sweet Aroma Restaurant. All rights reserved.</p>
+        <p>&copy; 2026 Sweet Aroma Restaurant. All rights reserved.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script src="script.js"></script>
+    <script src="index-dynamic.js"></script>
 
 </body>
 

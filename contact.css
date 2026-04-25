@@ -7,6 +7,7 @@
     font-size: clamp(1.6rem, 4vw, 2.5rem);
 }
 
+/* ── CONTACT LAYOUT ── */
 .contact {
     display: flex;
     flex-wrap: wrap;
@@ -80,6 +81,10 @@ button:hover {
     background-color: rgb(157, 199, 90);
 }
 
+/* ═══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════ */
+
 /* ── TABLET ── */
 @media (max-width: 768px) {
     .contact {
@@ -87,7 +92,8 @@ button:hover {
         gap: 2rem;
     }
 
-    input, textarea {
+    input,
+    textarea {
         max-width: 100%;
     }
 }

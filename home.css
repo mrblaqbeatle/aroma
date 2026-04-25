@@ -83,6 +83,7 @@ body {
     transition: transform 0.3s, opacity 0.3s;
 }
 
+/* Animate hamburger → X when open */
 .hamburger.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -91,6 +92,19 @@ body {
 }
 .hamburger.active span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── OVERLAY ── */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.nav-overlay.active {
+    display: block;
 }
 
 hr {
@@ -109,14 +123,18 @@ footer {
     text-align: center;
 }
 
-/* ── TABLET ── */
+/* ═══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════ */
+
+/* ── TABLET (max 1024px) ── */
 @media (max-width: 1024px) {
     .navbar {
         padding: 18px 24px;
     }
 }
 
-/* ── MOBILE ── */
+/* ── MOBILE (max 768px) ── */
 @media (max-width: 768px) {
     body {
         padding-top: 80px;
@@ -131,10 +149,12 @@ footer {
         height: 38px;
     }
 
+    /* Show hamburger button */
     .hamburger {
         display: flex;
     }
 
+    /* Slide-in side menu */
     .nav-links {
         position: fixed;
         top: 0;

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROMA - Admin Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: rgb(124, 197, 7);
+            --green-hover: rgb(157, 199, 90);
+            --green-light: #e2fac9;
+            --dark: #1a1f0e;
+            --text: #222;
+            --muted: #666;
+            --border: #ddd;
+            --red: #e74c3c;
+            --red-hover: #c0392b;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f5fde8;
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .admin-topbar {
+            background: var(--green);
+            padding: 0 32px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.04em;
+        }
+
+        .topbar-brand img { width: 36px; height: 36px; }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-user {
+            font-size: 0.88rem;
+            color: rgba(0,0,0,0.65);
+        }
+
+        .btn-logout {
+            background: rgba(0,0,0,0.12);
+            border: none;
+            border-radius: 6px;
+            padding: 7px 16px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover { background: rgba(0,0,0,0.22); }
+
+        /* ── LAYOUT ── */
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* ── SIDEBAR ── */
+        .admin-sidebar {
+            width: 220px;
+            background: var(--dark);
+            color: #fff;
+            padding: 24px 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: #fff;
+            background: rgba(255,255,255,0.07);
+            border-left-color: var(--green);
+        }
+
+        /* ── MAIN CONTENT ── */
+        .admin-main {
+            flex: 1;
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        /* ── PANELS ── */
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .panel-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 20px;
+            border-radius: 7px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s, opacity 0.15s;
+        }
+
+        .btn-primary { background: var(--green); color: #000; }
+        .btn-primary:hover { background: var(--green-hover); }
+
+        .btn-danger { background: var(--red); color: #fff; }
+        .btn-danger:hover { background: var(--red-hover); }
+
+        .btn-secondary { background: #eee; color: #333; }
+        .btn-secondary:hover { background: #ddd; }
+
+        .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+        /* ── DATA TABLE ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+        }
+
+        .data-table th {
+            background: var(--green-light);
+            padding: 13px 16px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #3a5c00;
+        }
+
+        .data-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: #fafef5; }
+
+        .table-actions { display: flex; gap: 8px; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .badge-yes { background: #d4edda; color: #155724; }
+        .badge-no  { background: #f0f0f0; color: #666; }
+
+        .dish-thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: var(--green-light);
+        }
+
+        /* ── TOAST NOTIFICATION ── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #222;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 500;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success { background: #2d6a00; }
+        .toast.error   { background: var(--red-hover); }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+        }
+
+        .modal h3 {
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .modal .form-group { margin-bottom: 18px; }
+
+        .modal label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .modal input,
+        .modal select,
+        .modal textarea {
+            width: 100%;
+            padding: 10px 13px;
+            border: 1.5px solid var(--border);
+            border-radius: 7px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.15s;
+        }
+
+        .modal input:focus,
+        .modal select:focus,
+        .modal textarea:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* ── IMAGE UPLOAD WIDGET ── */
+        .image-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .image-upload-area.has-image {
+            border-color: var(--green);
+            background: #f8fff0;
+        }
+
+        .image-upload-area.uploading {
+            border-color: #f0a500;
+            background: #fffbf0;
+        }
+
+        .image-preview-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .image-preview-thumb {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: var(--green-light);
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .image-preview-thumb.visible { display: block; }
+
+        .image-preview-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .image-preview-name {
+            font-size: 0.82rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 280px;
+        }
+
+        .upload-status {
+            font-size: 0.82rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .upload-status.uploading { color: #b07800; }
+        .upload-status.done      { color: #2d6a00; }
+        .upload-status.error     { color: var(--red); }
+
+        .upload-file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: #333;
+        }
+
+        .upload-file-label:hover { background: #e0e0e0; }
+
+        /* Hide real file input, use label as trigger */
+        #dish-image-file { display: none; }
+
+        /* ── EMPTY / LOADING STATES ── */
+        .state-msg {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .admin-sidebar { display: none; }
+            .admin-main { padding: 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="admin-topbar">
+        <div class="topbar-brand">
+            <img src="asets/logo.png" alt="Logo">
+            <span>AROMA ADMIN</span>
+        </div>
+        <div class="topbar-right">
+            <span class="topbar-user" id="admin-email"></span>
+            <button class="btn-logout" id="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="active" data-panel="dishes">🍽 Dishes</a>
+                <a href="#" data-panel="categories">📂 Categories</a>
+                <a href="index.html" target="_blank">🔗 View Site</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main">
+
+            <!-- ── DISHES PANEL ── -->
+            <section class="panel active" id="panel-dishes">
+                <div class="panel-header">
+                    <h2>Dishes</h2>
+                    <button class="btn btn-primary" id="add-dish-btn">+ Add Dish</button>
+                </div>
+                <div id="dishes-table-wrap">
+                    <p class="state-msg" id="dishes-loading">Loading dishes…</p>
+                </div>
+            </section>
+
+            <!-- ── CATEGORIES PANEL ── -->
+            <section class="panel" id="panel-categories">
+                <div class="panel-header">
+                    <h2>Categories</h2>
+                    <button class="btn btn-primary" id="add-cat-btn">+ Add Category</button>
+                </div>
+                <div id="categories-table-wrap">
+                    <p class="state-msg" id="categories-loading">Loading categories…</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ── DISH MODAL ── -->
+    <div class="modal-overlay" id="dish-modal">
+        <div class="modal">
+            <h3 id="dish-modal-title">Add Dish</h3>
+            <input type="hidden" id="dish-id">
+
+            <div class="form-group">
+                <label for="dish-name">Name *</label>
+                <input type="text" id="dish-name" placeholder="e.g. Grilled Chicken">
+            </div>
+
+            <div class="form-group">
+                <label for="dish-description">Description</label>
+                <textarea id="dish-description" rows="2" placeholder="Short dish description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="dish-price">Price *</label>
+                <input type="text" id="dish-price" placeholder="e.g. 30,000 UGX">
+            </div>
+
+            <div class="form-group">
+                <label>Dish Image</label>
+                <!-- Hidden field holds the final public URL — read by admin.js exactly as before -->
+                <input type="hidden" id="dish-image">
+
+                <div class="image-upload-area" id="image-upload-area">
+                    <div class="image-preview-row">
+                        <img class="image-preview-thumb" id="dish-image-preview" alt="Preview">
+                        <div class="image-preview-info">
+                            <div class="image-preview-name" id="dish-image-name">No image selected</div>
+                            <div class="upload-status" id="upload-status"></div>
+                        </div>
+                    </div>
+
+                    <label class="upload-file-label" for="dish-image-file">
+                        📁 Choose image…
+                    </label>
+                    <input type="file" id="dish-image-file"
+                           accept="image/png,image/jpeg,image/webp">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dish-category">Category</label>
+                <select id="dish-category">
+                    <option value="">— Uncategorized —</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-row">
+                    <input type="checkbox" id="dish-featured">
+                    <label for="dish-featured" style="margin:0;font-size:0.95rem;">Featured on homepage</label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="dish-cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="dish-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CATEGORY MODAL ── -->
+    <div class="modal-overlay" id="cat-modal">
+        <div class="modal">
+            <h3 id="cat-modal-title">Add Category</h3>
+            <input type="hidden" id="cat-id">
+
+            <div class="form-group">
+                <label for="cat-name">Category Name *</label>
+                <input type="text" id="cat-name" placeholder="e.g. Main Courses">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cat-cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="cat-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+
+</html>
