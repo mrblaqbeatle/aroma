@@ -1,5 +1,6 @@
 .intro {
     text-align: center;
+    padding: 0 1rem;
 }
 
 .intro a {
@@ -14,7 +15,7 @@
 }
 
 .intro h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
 }
 
 .intro a:hover {
@@ -23,118 +24,37 @@
     background-color: rgb(157, 199, 90);
 }
 
+/* ── TODAY'S DISHES CARD GRID ── */
 .ontoday {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    margin: 2rem auto;
-    padding-bottom: 30px;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem 30px;
     justify-content: center;
+    max-width: 1200px;
 }
 
 .todaysdishes {
-    flex: 1 1 250px;
+    flex: 1 1 280px;
+    max-width: 360px;
+    min-width: 0;
     overflow: hidden;
     border-radius: 10px;
     background-color: #e2fac9;
     transition: transform 0.3s;
-    max-width: 300px;
-    min-width: 200px;
+}
+
+.todaysdishes:hover {
+    transform: translateY(-4px);
 }
 
 .todaysdishes img {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
-}
-
-.todaysdishes h4 {
-    text-align: center;
-    padding: 1rem;
-    font-size: 1.2rem;
-}
-
-.todaysdishes p {
-    text-align: center;
-    padding: 0.5rem;
-}
-
-.todaysdishes span {
-    text-align: center;
-    padding: 1rem;
-    font-size: 1.2rem;
+    height: 260px;
+    object-fit: contain;
     display: block;
-}
-
-/* Responsive adjustments for ontoday */
-@media (max-width: 768px) {
-    .ontoday {
-        gap: 1rem;
-    }
-    
-    .todaysdishes {
-        flex: 1 1 200px;
-        max-width: 250px;
-    }
-    
-    .todaysdishes img {
-        height: 200px;
-    }
-    
-    .todaysdishes h4 {
-        font-size: 1.1rem;
-    }
-    
-    .todaysdishes p {
-        font-size: 0.9rem;
-    }
-    
-    .todaysdishes span {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .ontoday {
-        gap: 0.5rem;
-    }
-    
-    .todaysdishes {
-        flex: 1 1 180px;
-        max-width: 220px;
-    }
-    
-    .todaysdishes img {
-        height: 180px;
-    }
-    
-    .todaysdishes h4 {
-        font-size: 1rem;
-        padding: 0.8rem;
-    }
-    
-    .todaysdishes p {
-        font-size: 0.8rem;
-        padding: 0.4rem;
-    }
-    
-    .todaysdishes span {
-        font-size: 1rem;
-        padding: 0.8rem;
-    }
-}
-
-.todaysdishes {
-    overflow: hidden;
-    border-radius: 10px;
     background-color: #e2fac9;
-    transition: transform 0.3s;
-}
-
-.todaysdishes img {
-    height: 400px;
-    background-size: cover;
-    background-position: center;
 }
 
 .todaysdishes h4 {
@@ -158,5 +78,58 @@
 .logo img {
     width: 50px;
     height: 50px;
+}
 
+/* ── TABLET ── */
+@media (max-width: 900px) {
+    .todaysdishes {
+        flex: 1 1 calc(50% - 0.75rem);
+        max-width: calc(50% - 0.75rem);
+    }
+
+    .todaysdishes img {
+        height: 200px;
+    }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+    .intro a {
+        padding: 16px 28px;
+        font-size: 1rem;
+    }
+
+    .intro a:hover {
+        padding: 18px 30px;
+    }
+
+    .ontoday {
+        gap: 0.75rem;
+        padding: 0 0.75rem 20px;
+    }
+
+    .todaysdishes {
+        flex: 0 0 calc(50% - 0.375rem);
+        max-width: calc(50% - 0.375rem);
+        min-width: 0;
+    }
+
+    .todaysdishes img {
+        height: 150px;
+    }
+
+    .todaysdishes h4 {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+    }
+
+    .todaysdishes p {
+        font-size: 0.85rem;
+        padding: 0.3rem;
+    }
+
+    .todaysdishes span {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
 }
