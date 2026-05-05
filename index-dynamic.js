@@ -1,15 +1,10 @@
-// ══════════════════════════════════════════════════════
-//  index-dynamic.js — Homepage featured dishes loader
-//  Depends on: supabase-client.js
-// ══════════════════════════════════════════════════════
-
 (function () {
     'use strict';
 
-    // In-memory cache so navigating back doesn't re-fetch
+    
     let _cache = null;
 
-    // ── Render a single featured dish card (matches existing .todaysdishes markup)
+    
     function renderCard(dish) {
         const div = document.createElement('div');
         div.className = 'todaysdishes';
@@ -17,7 +12,7 @@
         const img = document.createElement('img');
         img.src = dish.image_url || 'asets/imgs/placeholder.png';
         img.alt = dish.name;
-        img.loading = 'lazy'; // lazy load per performance requirement
+        img.loading = 'lazy'; 
 
         const h4 = document.createElement('h4');
         h4.textContent = dish.name;
@@ -36,7 +31,7 @@
         return div;
     }
 
-    // ── Show skeleton cards while loading (prevents layout shift)
+    
     function showSkeletons(container, count) {
         container.innerHTML = '';
         for (let i = 0; i < count; i++) {
@@ -47,7 +42,7 @@
         }
     }
 
-    // ── Inject shimmer keyframes once
+
     function injectShimmer() {
         if (document.getElementById('aroma-shimmer')) return;
         const style = document.createElement('style');
@@ -56,7 +51,7 @@
         document.head.appendChild(style);
     }
 
-    // ── Fetch featured dishes from Supabase
+    
     async function fetchFeatured() {
         if (_cache) return _cache;
 
@@ -75,7 +70,7 @@
         return data;
     }
 
-    // ── Main entry point
+    
     async function init() {
         const container = document.querySelector('.ontoday');
         if (!container) return;
@@ -91,13 +86,13 @@
             return;
         }
 
-        // Render cards using document fragment for single DOM write
+        
         const fragment = document.createDocumentFragment();
         dishes.forEach(dish => fragment.appendChild(renderCard(dish)));
         container.appendChild(fragment);
     }
 
-    // Run after DOM is ready
+   
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

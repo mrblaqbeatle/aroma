@@ -1,4 +1,3 @@
-// Hamburger menu toggle (robust version)
 document.addEventListener('DOMContentLoaded', function () {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Toggle menu
+    
     hamburger.addEventListener('click', function () {
         if (navLinks.classList.contains('open')) {
             closeMenu();
@@ -36,12 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Close on overlay click (if exists)
+    
     if (overlay) {
         overlay.addEventListener('click', closeMenu);
     }
 
-    // Close menu when a nav link is clicked
+  
     const links = navLinks.querySelectorAll('a');
     links.forEach(function (link) {
         link.addEventListener('click', closeMenu);

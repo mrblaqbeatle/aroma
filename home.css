@@ -83,7 +83,7 @@ body {
     transition: transform 0.3s, opacity 0.3s;
 }
 
-/* Animate hamburger → X when open */
+
 .hamburger.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -94,7 +94,7 @@ body {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* ── OVERLAY ── */
+
 .nav-overlay {
     display: none;
     position: fixed;
@@ -123,11 +123,9 @@ footer {
     text-align: center;
 }
 
-/* ═══════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-═══════════════════════════════════════ */
 
-/* ── TABLET (max 1024px) ── */
+
+
 @media (max-width: 1024px) {
     .navbar {
         padding: 18px 24px;

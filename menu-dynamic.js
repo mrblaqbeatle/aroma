@@ -1,15 +1,10 @@
-// ══════════════════════════════════════════════════════
-//  menu-dynamic.js — Menu page dynamic renderer
-//  Depends on: supabase-client.js
-// ══════════════════════════════════════════════════════
-
 (function () {
     'use strict';
 
     // In-memory cache
     let _cache = null;
 
-    // ── Build a single .dishes card (matches existing menu.html markup)
+    
     function renderDishCard(dish) {
         const div = document.createElement('div');
         div.className = 'dishes';
@@ -36,7 +31,7 @@
         return div;
     }
 
-    // ── Build a full category section (h2 + .menu section)
+    
     function renderCategorySection(category, dishes) {
         const h2 = document.createElement('h2');
         h2.textContent = category.name;
@@ -59,7 +54,7 @@
         return [h2, section];
     }
 
-    // ── Skeleton loader for menu sections
+    
     function showSkeleton(container) {
         container.innerHTML = '';
         const style = `
@@ -85,7 +80,7 @@
         document.head.appendChild(s);
     }
 
-    // ── Fetch all categories + all dishes in two parallel queries
+   
     async function fetchMenuData() {
         if (_cache) return _cache;
 
@@ -109,7 +104,7 @@
             return null;
         }
 
-        // Group dishes by category_id for O(1) lookup
+        
         const dishesByCategory = {};
         dishResult.data.forEach(dish => {
             if (!dishesByCategory[dish.category_id]) {
@@ -122,12 +117,12 @@
         return _cache;
     }
 
-    // ── Main entry point
+  
     async function init() {
         const main = document.querySelector('main');
         if (!main) return;
 
-        // Find the dynamic menu area (after the intro + hr)
+        
         const menuContainer = document.getElementById('menu-dynamic-area');
         if (!menuContainer) return;
 

@@ -1,20 +1,11 @@
-// ══════════════════════════════════════════════════════
-//  admin.js — Admin dashboard CRUD logic
-//  Depends on: supabase-client.js
-// ══════════════════════════════════════════════════════
-
 (function () {
     'use strict';
 
-    // ════════════════════════════════════════════════
-    //  STATE
-    // ════════════════════════════════════════════════
+
     let categories = [];
     let dishes = [];
 
-    // ════════════════════════════════════════════════
-    //  AUTH GUARD — redirect if not logged in
-    // ════════════════════════════════════════════════
+
     async function authGuard() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) {
@@ -30,9 +21,7 @@
         window.location.href = 'login.html';
     });
 
-    // ════════════════════════════════════════════════
-    //  TOAST
-    // ════════════════════════════════════════════════
+
     let toastTimer;
     function toast(msg, type = 'success') {
         const el = document.getElementById('toast');
@@ -42,9 +31,7 @@
         toastTimer = setTimeout(() => { el.className = 'toast'; }, 3000);
     }
 
-    // ════════════════════════════════════════════════
-    //  SIDEBAR NAVIGATION
-    // ════════════════════════════════════════════════
+
     document.querySelectorAll('.sidebar-nav a[data-panel]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
@@ -58,9 +45,7 @@
         });
     });
 
-    // ════════════════════════════════════════════════
-    //  CATEGORIES — FETCH & RENDER
-    // ════════════════════════════════════════════════
+
     async function fetchCategories() {
         const { data, error } = await supabaseClient
             .from('categories')
@@ -108,7 +93,7 @@
 
     function populateCategoryDropdown() {
         const sel = document.getElementById('dish-category');
-        // Keep the default empty option
+      
         sel.innerHTML = '<option value="">— Uncategorized —</option>';
         categories.forEach(cat => {
             const opt = document.createElement('option');
@@ -118,7 +103,7 @@
         });
     }
 
-    // ── Category Modal ──
+   
     function openCatModal(cat = null) {
         document.getElementById('cat-modal-title').textContent = cat ? 'Edit Category' : 'Add Category';
         document.getElementById('cat-id').value = cat ? cat.id : '';
@@ -168,7 +153,7 @@
         await fetchCategories();
     });
 
-    // Exposed globally for inline onclick
+    
     window.editCategory = function (id) {
         const cat = categories.find(c => c.id === id);
         if (cat) openCatModal(cat);
@@ -189,9 +174,7 @@
         await fetchDishes(); // refresh dishes table too
     };
 
-    // ════════════════════════════════════════════════
-    //  DISHES — FETCH & RENDER
-    // ════════════════════════════════════════════════
+
     async function fetchDishes() {
         const { data, error } = await supabaseClient
             .from('dishes')
@@ -261,12 +244,10 @@
         `;
     }
 
-    // ════════════════════════════════════════════════
-    //  IMAGE UPLOAD — Supabase Storage
-    // ════════════════════════════════════════════════
+
     const BUCKET = 'restaurant-images';
 
-    // Helpers to update the upload widget UI
+    
     function setUploadStatus(msg, type = '') {
         const el = document.getElementById('upload-status');
         el.textContent = msg;
@@ -300,28 +281,28 @@
         setUploadStatus('');
     }
 
-    // Upload file → Supabase Storage → return public URL
+    
     async function uploadDishImage(file) {
-        // Validate type client-side before sending
+        
         const allowed = ['image/png', 'image/jpeg', 'image/webp'];
         if (!allowed.includes(file.type)) {
             throw new Error('Only PNG, JPEG, and WebP images are allowed.');
         }
 
-        // Sanitise filename and make it unique
+        
         const safeName   = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
         const filePath   = `dishes/${Date.now()}_${safeName}`;
 
         const { error: uploadError } = await supabaseClient.storage
             .from(BUCKET)
             .upload(filePath, file, {
-                cacheControl: '3600',   // CDN cache 1 hour
+                cacheControl: '3600',   
                 upsert: false,
             });
 
         if (uploadError) throw new Error(uploadError.message);
 
-        // Get permanent public CDN URL
+        
         const { data } = supabaseClient.storage
             .from(BUCKET)
             .getPublicUrl(filePath);
@@ -329,30 +310,30 @@
         return data.publicUrl;
     }
 
-    // Wire up the file input — auto-upload on selection
+    
     document.getElementById('dish-image-file').addEventListener('change', async function () {
         const file = this.files[0];
         if (!file) return;
 
-        // Show local preview immediately while uploading
+       
         const localUrl = URL.createObjectURL(file);
         showPreview(localUrl, file.name);
         setUploadAreaState('uploading');
         setUploadStatus('Uploading…', 'uploading');
 
-        // Disable save while upload is in progress
+        
         document.getElementById('dish-save-btn').disabled = true;
 
         try {
             const publicUrl = await uploadDishImage(file);
-            // Store the URL in the hidden field (read by save logic unchanged)
+            
             document.getElementById('dish-image').value = publicUrl;
-            // Swap local blob URL → real CDN URL in preview
+           
             showPreview(publicUrl, file.name);
             setUploadAreaState('has-image');
             setUploadStatus('✓ Uploaded', 'done');
         } catch (err) {
-            // Revert preview on failure
+        
             const existingUrl = document.getElementById('dish-image').value;
             showPreview(existingUrl || '', existingUrl ? 'Current image' : '');
             setUploadAreaState(existingUrl ? 'has-image' : '');
@@ -363,7 +344,7 @@
         }
     });
 
-    // ── Dish Modal ──
+   
     function openDishModal(dish = null) {
         document.getElementById('dish-modal-title').textContent = dish ? 'Edit Dish' : 'Add Dish';
         document.getElementById('dish-id').value           = dish ? dish.id : '';
@@ -373,11 +354,11 @@
         document.getElementById('dish-category').value     = dish ? (dish.category_id || '') : '';
         document.getElementById('dish-featured').checked   = dish ? dish.is_featured : false;
 
-        // Restore image widget state
+       
         const url = dish ? (dish.image_url || '') : '';
         document.getElementById('dish-image').value = url;
         if (url) {
-            // Determine a display name: extract filename from URL or use placeholder
+            
             const filename = url.split('/').pop().split('?')[0] || 'Current image';
             showPreview(url, filename);
             setUploadAreaState('has-image');
@@ -392,7 +373,7 @@
 
     function closeDishModal() {
         document.getElementById('dish-modal').classList.remove('open');
-        // Reset file input so same file can be re-selected after cancel
+        
         document.getElementById('dish-image-file').value = '';
     }
 
@@ -453,9 +434,7 @@
         await fetchDishes();
     };
 
-    // ════════════════════════════════════════════════
-    //  UTILITIES
-    // ════════════════════════════════════════════════
+  
     function escHtml(str) {
         if (!str) return '';
         return String(str)
@@ -465,14 +444,12 @@
             .replace(/"/g, '&quot;');
     }
 
-    // ════════════════════════════════════════════════
-    //  BOOT
-    // ════════════════════════════════════════════════
+   
     async function init() {
         const session = await authGuard();
         if (!session) return;
 
-        // Load categories first (needed for dish dropdown)
+        
         await fetchCategories();
         await fetchDishes();
     }

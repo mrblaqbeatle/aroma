@@ -27,7 +27,7 @@
             min-height: 100vh;
         }
 
-        /* ── TOP BAR ── */
+        
         .admin-topbar {
             background: var(--green);
             padding: 0 32px;
@@ -76,13 +76,13 @@
 
         .btn-logout:hover { background: rgba(0,0,0,0.22); }
 
-        /* ── LAYOUT ── */
+      
         .admin-layout {
             display: flex;
             min-height: calc(100vh - 60px);
         }
 
-        /* ── SIDEBAR ── */
+        
         .admin-sidebar {
             width: 220px;
             background: var(--dark);
@@ -111,14 +111,14 @@
             border-left-color: var(--green);
         }
 
-        /* ── MAIN CONTENT ── */
+     
         .admin-main {
             flex: 1;
             padding: 32px;
             overflow-x: auto;
         }
 
-        /* ── PANELS ── */
+       
         .panel { display: none; }
         .panel.active { display: block; }
 
@@ -134,7 +134,7 @@
             font-weight: 700;
         }
 
-        /* ── BUTTONS ── */
+       
         .btn {
             display: inline-flex;
             align-items: center;
@@ -159,7 +159,7 @@
 
         .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-        /* ── DATA TABLE ── */
+        
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -211,7 +211,7 @@
             background: var(--green-light);
         }
 
-        /* ── TOAST NOTIFICATION ── */
+       
         .toast {
             position: fixed;
             bottom: 28px;
@@ -238,7 +238,6 @@
         .toast.success { background: #2d6a00; }
         .toast.error   { background: var(--red-hover); }
 
-        /* ── MODAL ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -316,7 +315,7 @@
             cursor: pointer;
         }
 
-        /* ── IMAGE UPLOAD WIDGET ── */
+        
         .image-upload-area {
             border: 2px dashed var(--border);
             border-radius: 8px;
@@ -393,10 +392,10 @@
 
         .upload-file-label:hover { background: #e0e0e0; }
 
-        /* Hide real file input, use label as trigger */
+        
         #dish-image-file { display: none; }
 
-        /* ── EMPTY / LOADING STATES ── */
+        
         .state-msg {
             text-align: center;
             padding: 40px;
@@ -404,7 +403,7 @@
             font-size: 0.95rem;
         }
 
-        /* ── RESPONSIVE ── */
+       
         @media (max-width: 700px) {
             .admin-sidebar { display: none; }
             .admin-main { padding: 16px; }
@@ -414,7 +413,7 @@
 
 <body>
 
-    <!-- TOP BAR -->
+    
     <div class="admin-topbar">
         <div class="topbar-brand">
             <img src="asets/logo.png" alt="Logo">
@@ -428,7 +427,7 @@
 
     <div class="admin-layout">
 
-        <!-- SIDEBAR -->
+       
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
                 <a href="#" class="active" data-panel="dishes">🍽 Dishes</a>
@@ -437,10 +436,10 @@
             </nav>
         </aside>
 
-        <!-- MAIN -->
+        
         <main class="admin-main">
 
-            <!-- ── DISHES PANEL ── -->
+           
             <section class="panel active" id="panel-dishes">
                 <div class="panel-header">
                     <h2>Dishes</h2>
@@ -451,7 +450,7 @@
                 </div>
             </section>
 
-            <!-- ── CATEGORIES PANEL ── -->
+            
             <section class="panel" id="panel-categories">
                 <div class="panel-header">
                     <h2>Categories</h2>
@@ -465,7 +464,7 @@
         </main>
     </div>
 
-    <!-- ── DISH MODAL ── -->
+    
     <div class="modal-overlay" id="dish-modal">
         <div class="modal">
             <h3 id="dish-modal-title">Add Dish</h3>
@@ -488,7 +487,7 @@
 
             <div class="form-group">
                 <label>Dish Image</label>
-                <!-- Hidden field holds the final public URL — read by admin.js exactly as before -->
+               
                 <input type="hidden" id="dish-image">
 
                 <div class="image-upload-area" id="image-upload-area">
@@ -529,7 +528,7 @@
         </div>
     </div>
 
-    <!-- ── CATEGORY MODAL ── -->
+    
     <div class="modal-overlay" id="cat-modal">
         <div class="modal">
             <h3 id="cat-modal-title">Add Category</h3>
@@ -547,7 +546,7 @@
         </div>
     </div>
 
-    <!-- TOAST -->
+    
     <div class="toast" id="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

@@ -1,8 +1,3 @@
-// ══════════════════════════════════════════════════════
-//  login.js — Admin authentication handler
-//  Depends on: supabase-client.js
-// ══════════════════════════════════════════════════════
-
 (function () {
     'use strict';
 
@@ -26,12 +21,12 @@
         loginBtn.textContent = loading ? 'Signing in…' : 'Sign In';
     }
 
-    // If already logged in, skip to admin
+    
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
         if (session) window.location.href = 'admin.html';
     });
 
-    // Handle Enter key
+   
     [emailInput, passwordInput].forEach(el => {
         el.addEventListener('keydown', e => {
             if (e.key === 'Enter') loginBtn.click();
