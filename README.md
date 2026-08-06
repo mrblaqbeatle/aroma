@@ -1,15 +1,37 @@
-# Aroma Restaurant
+# Aroma Restaurant Website
 
-A modern restaurant website showcasing menus, featured dishes, and restaurant information.
+A modern and responsive restaurant website designed to showcase menu items, restaurant information, and services through a clean user interface.
 
-This project demonstrates responsive frontend development and user-focused interface design.
+## Overview
+
+This project focuses on creating a professional online presence for a restaurant with emphasis on visual presentation, responsive design, and a smooth user experience across different devices.
 
 ## Features
 
-- Restaurant menu
-- Responsive layout
-- Attractive landing page
-- Contact information
-- Modern animations
+- Responsive restaurant landing page
+- Menu showcase
+- Restaurant information sections
+- Contact section
+- Mobile-friendly design
+- Clean and modern user interface
 
-# See Deployments for website show case.
+## Technology Stack
+
+- HTML5
+- CSS3
+- JavaScript
+
+## Live Demo
+
+https://mrblaqbeatle.github.io/aroma/index.html
+
+## Future Improvements
+
+- Online reservation system
+- Online ordering functionality
+- Backend integration
+- Content management system
+
+## License
+
+MIT License
